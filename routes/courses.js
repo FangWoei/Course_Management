@@ -12,7 +12,10 @@ const Courses = require("../models/course");
 
 router.get("/", async (req, res) => {
   try {
-    const courses = await Courses.find().populate("instructor");
+    const courses = await Courses.find().populate({
+      path: "instructor",
+      select: "name qualification profile",
+    });
     res.status(200).send(courses);
   } catch (error) {
     res.status(400).send({ message: "Courses not found" });
@@ -22,9 +25,10 @@ router.get("/", async (req, res) => {
 // instruction: setup GET /:id: Retrieve details of a specific course by its _id (use populate() for instructor details)
 router.get("/:id", async (req, res) => {
   try {
-    const data = await Courses.findOne({ _id: req.params.id }).populate(
-      "instructor"
-    );
+    const data = await Courses.findOne({ _id: req.params.id }).populate({
+      path: "instructor",
+      select: "name qualification profile",
+    });
     res.status(200).send(data);
   } catch (error) {
     res.status(400).send({ message: "Courses not found" });
@@ -36,12 +40,12 @@ router.post("/", async (req, res) => {
   try {
     const newCourses = new Courses({
       title: req.body.title,
-      instructor: req.body.instructor,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
       subject: req.body.subject,
       description: req.body.description,
       enrollmentCount: req.body.enrollmentCount,
+      instructor: req.body.instructor,
     });
 
     await newCourses.save();

@@ -15,18 +15,10 @@ const instructorSchema = require("./instructor");
 */
 
 const courseSchema = new Schema({
-
   title: {
     type: String,
     required: true,
   },
-
-  instructor: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Instructor",
-    },
-  ],
 
   startDate: {
     type: Date,
@@ -48,6 +40,13 @@ const courseSchema = new Schema({
     type: Number,
     default: 0,
   },
+
+  instructor: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Instructor",
+    },
+  ],
 });
 
 const Courses = model("Courses", courseSchema);
