@@ -41,12 +41,10 @@ const courseSchema = new Schema({
     default: 0,
   },
 
-  instructor: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Instructor",
-    },
-  ],
+  instructor: {
+    type: Schema.Types.ObjectId,
+    ref: "Instructor",
+  },
 });
 
 const Courses = model("Courses", courseSchema);
